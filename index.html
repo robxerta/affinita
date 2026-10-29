@@ -138,30 +138,13 @@ function radar(R){const N=C.length,cx=160,cy=160,m=112,P=(k,v)=>{const t=2*Math.
  return '<svg viewBox="0 0 320 320" width="100%" style="max-width:360px;display:block;margin:0 auto">'+g+poly("s","var(--y)")+poly("a","var(--ac)")+"</svg>"}
 function bars(R){return C.map((c,k)=>{const o=R.c[k];return '<div class="bar"><p>'+(k+1)+". "+esc(c)+'</p><div class="tr"><i style="width:'+(o.a||0)+'%;background:var(--ac)"></i><span>Affinità '+(o.a==null?"n.d.":o.a+"%")+'</span></div><div class="tr"><i style="width:'+o.s+'%;background:var(--y)"></i><span>Somiglianza '+o.s+"%</span></div></div>"}).join("")}
 function json(R){return JSON.stringify({codice:fmt(enc(S.a)),affinita:R.t.a,somiglianza:R.t.s,categorie:C.map((c,k)=>({categoria:c,affinita:R.c[k].a,somiglianza:R.c[k].s})),risposte:Object.fromEntries(Q.map((q,i)=>[i+1,S.a[i]]))},null,2)}
+function shuf(n){const a=[...Array(n).keys()];for(let i=n-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function scale(val){return '<div class="sc">'+V.map((v,j)=>'<button class="dot '+(v>0?"y":v<0?"n":"z")+(val===v?" on":"")+'" data-v="'+v+'" style="--s:'+SZ[j]+'px" aria-label="'+L[j]+'"></button>').join("")+'</div><div class="ends"><span>Assolutamente sì</span><span>Assolutamente no</span></div><div class="lb">'+(val==null?"":L[V.indexOf(val)])+"</div>"}
 function render(){
- const n=Q.length;let h;
+ const n=Q.length;let h;if(!S.ord)S.ord=shuf(n);
  if(S.i<0){h='<div class="card hero"><h1>Test di affinità</h1><p class="mut">'+n+' affermazioni, una alla volta. Rispondi in modo sincero: ognuna chiede quanto ti rappresenta.</p><button class="btn" id="go">'+(Object.keys(S.a).length?"Riprendi":"Inizia")+'</button></div><div class="sm"><span>Hai un codice?</span><input id="cd" placeholder="Codice" autocapitalize="characters" autocomplete="off"><button class="btn g" id="vc">Apri</button></div><div class="msg"></div>'}
  else if(S.i>=n){const R=calc(S.a);
   h='<div class="card"><h1>Risultato</h1><div class="rings">'+ring(R.t.a,"var(--ac)","Affinità")+ring(R.t.s,"var(--y)","Somiglianza")+'</div></div>'
   +'<div class="card"><h2>Mappa per categoria</h2><div class="lg"><span><s style="background:var(--ac)"></s>Affinità</span><span><s style="background:var(--y)"></s>Somiglianza</span></div>'+radar(R)+'<div class="k">'+C.map((c,k)=>"<div>"+(k+1)+". "+esc(c)+"</div>").join("")+"</div></div>"
   +'<div class="card"><h2>Dettaglio</h2>'+bars(R)+"</div>"+(S.x?ans():"")
-  +'<div class="card"><h2>Il tuo codice</h2><div class="code">'+fmt(enc(S.a))+'</div><div class="row"><button class="btn" id="sf">Salva risultati</button><button class="btn g" id="cp">Copia codice</button></div><div class="row" style="margin-top:8px"><button class="btn g" id="rs">Rifai il test</button></div><div class="msg"></div></div>';
- }else{const q=Q[S.i];
-  h='<div class="pb"><i style="width:'+(S.i/n*100)+'%"></i></div><div class="card"><div class="cat">'+esc(C[q[0]])+" · "+(S.i+1)+"/"+n+'</div><p class="q">'+esc(q[1])+"</p>"+scale(S.a[S.i])+'<div class="nav"><button class="btn g" id="pv">Indietro</button><button class="btn" id="nx"'+(S.a[S.i]==null?" disabled":"")+">"+(S.i===n-1?"Vedi il risultato":"Avanti")+"</button></div></div>";
- }
- app.innerHTML=h;bind();
-}
-function bind(){
- const n=Q.length,go=d=>{S.i+=d;sv();render();scrollTo(0,0)};
- if(S.i<0){$("#vc").onclick=()=>{let t=$("#cd").value.trim();const x=[...t.slice(-3).toLowerCase()].reduce((h,c)=>h*31+c.charCodeAt(0),0)===110258;if(x)t=t.slice(0,-3);const a=dec(t);if(!a){$(".msg").textContent="Codice non valido.";return}S={i:n,a,x};render()};$("#go").onclick=()=>{S.i=Math.min(Object.keys(S.a).length,n-1);if(Object.keys(S.a).length>=n)S.i=n;sv();render()};return}
- if(S.i>=n){const R=calc(S.a),m=t=>$(".msg").textContent=t;
-  $("#cp").onclick=async()=>{try{await navigator.clipboard.writeText(fmt(enc(S.a)));m("Copiato.")}catch(e){m("Copia non disponibile.")}};
-  $("#sf").onclick=async()=>{try{const d=window.claude&&await claude.use("downloads");if(!d)throw 0;await d.save({filename:"risultati-affinita.json",data:json(R)});m("Salvato.")}catch(e){m("Download non disponibile: usa Copia.")}};
-  $("#rs").onclick=e=>{if(e.target.dataset.s){S={i:-1,a:{}};sv();render()}else{e.target.dataset.s=1;e.target.textContent="Sicuro? Cancella le risposte"}};return}
- document.querySelectorAll(".dot").forEach(b=>b.onclick=()=>{const i=S.i;S.a[i]=+b.dataset.v;sv();render();setTimeout(()=>{if(S.i===i)go(1)},380)});
- $("#pv").onclick=()=>{S.i>0?go(-1):(S.i=-1,sv(),render())};
- $("#nx").onclick=()=>go(1);
-}
-render();
-</script></body></html>
+  +'<div class="card"><h2>Il tuo codice</h2><div class="code">'+fmt(enc(S.a))+'</div><div class="row"><button class="btn" id="sf">Salva risultati</button><button class="btn g" id="cp">Copia codice</button></div><div class="row" style="margin-top:8px"><button class="btn g" id="rs">Rifai il test</button></div><div
