@@ -1,0 +1,167 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Test di affinità</title>
+<style>
+:root{--bg:#faf5f7;--card:#fff;--tx:#2b2231;--mut:#8b7f93;--ac:#b4477a;--ln:#eadfe7;--y:#2f9e8f;--n:#d4566b;--z:#b9aebf;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17121c;--card:#221b29;--tx:#f1eaf5;--mut:#a597ad;--ac:#e07aaa;--ln:#352b3e;--y:#3fc0ae;--n:#ee6f84;--z:#6d6275}}
+*{box-sizing:border-box}html,body{margin:0}body{background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}
+.w{max-width:560px;margin:0 auto;padding:16px}
+.pb{height:6px;background:var(--ln);border-radius:9px;overflow:hidden;margin-bottom:18px}.pb i{display:block;height:100%;background:var(--ac);transition:width .3s}
+.cat{display:inline-block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ac);font-weight:700;margin-bottom:8px}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:20px;padding:20px;margin-bottom:14px;box-shadow:0 8px 28px rgba(120,60,110,.08)}
+h1{font-size:26px;margin:0 0 8px}h2{font-size:16px;margin:0 0 12px}.q{font-size:19px;line-height:1.4;font-weight:600;margin:0 0 20px}.mut{color:var(--mut);font-size:14px}
+.sc{display:flex;justify-content:space-between;align-items:center}
+.dot{width:var(--s);height:var(--s);border-radius:50%;border:2.5px solid var(--z);background:transparent;cursor:pointer;padding:0;transition:transform .12s}
+.dot.y{border-color:var(--y)}.dot.n{border-color:var(--n)}.dot:active{transform:scale(.9)}
+.dot.on{background:var(--z)}.dot.on.y{background:var(--y)}.dot.on.n{background:var(--n)}
+.lb{text-align:center;font-size:13px;color:var(--mut);min-height:20px;margin-top:8px}
+.nav{display:flex;gap:10px;margin-top:16px}.nav button{flex:1}
+.btn{border:0;border-radius:14px;padding:12px;font-size:15px;font-weight:600;cursor:pointer;background:var(--ac);color:#fff;width:100%}.btn.g{background:var(--card);color:var(--tx);border:1px solid var(--ln)}.btn:disabled{opacity:.4}
+input{width:100%;font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--ln);border-radius:10px;padding:10px;margin:12px 0}
+.ends{display:flex;justify-content:space-between;font-size:12px;color:var(--mut);margin-top:8px}.hero{padding:34px 24px;border-left:3px solid var(--ac)}.hero h1{font-size:28px;letter-spacing:-.01em;margin:0 0 12px}.hero .btn{margin-top:24px}.code{font:700 19px ui-monospace,monospace;letter-spacing:.06em;text-align:center;background:var(--bg);border:1px dashed var(--ac);border-radius:12px;padding:12px;margin:8px 0;word-break:break-all}.rings{display:flex;justify-content:space-around;text-align:center}.rings b{display:block;font-size:13px;color:var(--mut);font-weight:600;margin-top:4px}
+.rings text{font-size:22px;font-weight:700;fill:var(--tx)}
+.bar{margin:0 0 14px}.bar p{margin:0 0 4px;font-size:14px;font-weight:600}.tr{height:9px;background:var(--ln);border-radius:9px;margin-bottom:5px;position:relative}.tr i{display:block;height:100%;border-radius:9px}
+.tr span{position:absolute;right:0;top:-17px;font-size:11px;color:var(--mut)}
+.lg{display:flex;gap:14px;font-size:13px;color:var(--mut);margin-bottom:10px}.lg s{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;text-decoration:none}
+.k{font-size:13px;color:var(--mut);columns:2;margin-top:8px}.k div{break-inside:avoid;margin-bottom:3px}
+.row{display:flex;gap:8px}.row .btn{flex:1}.msg{font-size:13px;color:var(--mut);margin-top:8px;min-height:18px}
+:root{--bg:#f3f1ec;--card:#fbfaf7;--tx:#15141a;--mut:#6b6872;--ac:#1d2b4a;--ln:#d8d4ca;--y:#8c6d2a;--n:#8a3a46;--z:#a9a59d}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e0e11;--card:#16161a;--tx:#e8e6e1;--mut:#8b8892;--ac:#9db3dc;--ln:#2b2b31;--y:#c9a85a;--n:#cc808b;--z:#5b5961}}
+body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}
+.card{border-radius:4px;box-shadow:none;padding:24px}
+.card h2{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);font-weight:600;margin:0 0 14px}
+.cat{font-size:11px;letter-spacing:.14em;font-weight:600;color:var(--mut);margin-bottom:14px}
+h1,.q{font-family:Georgia,"Times New Roman",serif;font-weight:400}
+.q{font-size:21px;line-height:1.45;margin-bottom:26px}
+.hero{border-left:0;border-top:2px solid var(--ac);padding:36px 24px}.hero h1{font-size:30px}
+.btn{border-radius:3px;background:var(--ac);color:var(--bg);letter-spacing:.04em;font-size:14px;padding:14px}
+.btn.g,#sf{background:transparent;color:var(--tx);border:1px solid var(--ln)}
+input{border-radius:3px;background:transparent}
+.pb{height:2px;border-radius:0}.pb i{border-radius:0}
+.dot{border-width:1.5px}.dot.y{border-color:var(--ac)}.dot.on.y{background:var(--ac)}.dot.n{border-color:var(--n)}.dot.on.n{background:var(--n)}
+.tr{height:6px;border-radius:0}.tr i{border-radius:0}
+.code{font-size:12px;padding:8px;border:1px solid var(--ln);background:transparent;letter-spacing:.04em}
+.row .btn{padding:10px;font-size:13px}
+.sm{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--mut);margin-top:6px}.sm span{white-space:nowrap}.sm input{margin:0;padding:8px 10px;font-size:13px;flex:1;min-width:0}.sm .btn{width:auto;padding:9px 16px;font-size:13px}
+:root{--bg:#faf5f7;--card:#fff;--tx:#2b2231;--mut:#8b7f93;--ac:#b4477a;--ln:#eadfe7;--y:#2f9e8f;--n:#d4566b;--z:#b9aebf}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17121c;--card:#221b29;--tx:#f1eaf5;--mut:#a597ad;--ac:#e07aaa;--ln:#352b3e;--y:#3fc0ae;--n:#ee6f84;--z:#6d6275}}
+body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.card{border-radius:20px;box-shadow:0 8px 28px rgba(120,60,110,.08);padding:20px}
+.card h2{font-size:16px;letter-spacing:0;text-transform:none;color:var(--tx);font-weight:700;margin:0 0 12px}
+.cat{font-size:12px;letter-spacing:.08em;font-weight:700;color:var(--ac);margin-bottom:8px}
+h1,.q{font-family:inherit}h1{font-weight:700}.q{font-weight:600;font-size:19px;line-height:1.4;margin-bottom:20px}
+.hero{border-top:0;padding:34px 24px;background:linear-gradient(160deg,var(--card),rgba(180,71,122,.14))}.hero h1{font-size:30px}
+.btn{border-radius:14px;background:var(--ac);color:#fff;letter-spacing:0;font-size:15px;padding:12px}
+.btn.g{background:var(--card);color:var(--tx);border:1px solid var(--ln)}#sf{background:var(--ac);color:#fff;border:0}
+input{border-radius:10px;background:var(--bg)}
+.pb{height:6px;border-radius:9px}
+.dot{border-width:2.5px}.dot.y{border-color:var(--y)}.dot.on.y{background:var(--y)}.dot.n{border-color:var(--n)}.dot.on.n{background:var(--n)}
+.tr{height:9px;border-radius:9px}.tr i{border-radius:9px}
+.code{font-size:13px;padding:8px;border:1px dashed var(--ac);background:var(--bg)}
+.row .btn,.sm .btn{border-radius:12px}
+.ai{padding:12px 0;border-top:1px solid var(--ln)}.ai:first-of-type{border-top:0}.ai p{margin:0 0 8px;font-size:15px}.ai .cat{margin-bottom:4px}.av{display:flex;justify-content:space-between;font-size:13px;color:var(--mut)}.av b.y{color:var(--y)}.av b.n{color:var(--n)}.av b.z{color:var(--mut)}
+</style></head><body><div class="w" id="app"></div>
+<script>
+const C=["Morale e interesse personale","Rapporti interpersonali","Società e regole","Sensibilità sociale","Sessualità","Interessi","Conoscenza di sé","Stile di vita e ambizione","Intimità","Tempo e presenza","Ruolo nella coppia","Intensità e rischio","Individualità"];
+const Q=[
+[0,"Se rispettare un principio morale mi impedisse di ottenere qualcosa che desidero molto, lo ignorerei."],
+[0,"Preferisco essere considerato una brava persona piuttosto che ottenere molto di più nella vita."],
+[0,"Se la società giudica immorale una scelta, per me allora è sbagliata, anche se mi darebbe dei vantaggi."],
+[1,"Se potessi ottenere un vantaggio importante approfittando dell’ingenuità di qualcuno, senza conseguenze, lo farei."],
+[1,"Se una persona a cui tengo diventasse un ostacolo ai miei obiettivi, pur di raggiungerli, troncherei il rapporto."],
+[1,"Trovo disgustoso come alcune persone sfruttino le debolezze altrui per i propri tornaconti: credo che la sensibilità debba essere capita e non sfruttata."],
+[2,"Se il benessere collettivo entra in conflitto con il mio interesse personale, do la priorità a ciò che conviene alla collettività."],
+[2,"Preferisco vivere in un sistema in cui ognuno è libero di perseguire i propri interessi, anche quando le opportunità e i risultati sono profondamente diseguali."],
+[2,"Se una regola limita la mia libertà senza offrirmi alcun vantaggio concreto, la rispetto comunque."],
+[3,"Presto attenzione a come l’origine etnica e il colore della pelle possano influenzare il trattamento e le opportunità riservate alle persone."],
+[3,"Le attività umane vanno portate avanti senza preoccuparsi troppo delle conseguenze ambientali, anche quando questo non mette in discussione abitudini consolidate o interessi economici."],
+[3,"Il benessere degli animali conta meno della comodità, delle abitudini e degli interessi economici umani."],
+[3,"Ritengo che le donne debbano avere maggiore voce e influenza nella società e che le loro esperienze e prospettive debbano essere maggiormente ascoltate e considerate nelle decisioni collettive."],
+[4,"Considero scandalosa una pratica sessuale se è insolita, estrema o giudicata negativamente dalla società."],
+[4,"Sono disposto a sperimentare dinamiche sessuali intense, compreso il dolore fisico consensuale, sia nel ruolo di chi lo provoca sia in quello di chi lo riceve."],
+[5,"Voglio poter parlare con il mio partner di qualsiasi argomento accademico, come filosofia, psicologia, letteratura e cinema, scoprendo opere e idee che non conosco."],
+[5,"Resto interessato a una persona anche se le nostre conversazioni rimangono superficiali e non mi offrono nuovi spunti di riflessione."],
+[5,"Per me è fondamentale avere un partner che sappia sia trasmettermi le proprie conoscenze sia ascoltare seriamente le mie, mettendo in discussione le proprie idee quando necessario."],
+[5,"Non mi interessa avere un partner che stimoli la mia curiosità intellettuale e mi spinga ad ampliare continuamente le mie conoscenze."],
+[6,"Quando scopro che una convinzione a cui tengo è sbagliata, la abbandono anche quando mi costa."],
+[6,"Quando qualcuno interpreta il mio comportamento in un modo che non mi piace, tendo a cercare cosa abbia capito male invece di considerare che possa aver notato qualcosa di vero."],
+[6,"Mi interrogo su quanto le mie idee su me stesso derivino da ciò che sono realmente e quanto dall’immagine che mi sono abituato ad avere di me."],
+[6,"Non mi capita di mettere in discussione le mie convinzioni: i criteri con cui stabilisco che qualcosa è vero o giusto sono sempre ottimi."],
+[7,"Mi interessa trovare modi intelligenti per ottenere risultati senza dover necessariamente lavorare più degli altri."],
+[7,"Preferisco essere vincolato a un unico lavoro o progetto per mantenermi piuttosto che avere diverse possibilità tra cui scegliere."],
+[7,"Non considero una laurea indispensabile per avere successo, purché una persona sappia acquisire le competenze necessarie per raggiungere i propri obiettivi."],
+[7,"Anche quando mi accorgo di trascorrere troppo tempo in attività poco soddisfacenti, non cambio le mie abitudini."],
+[7,"Non potrei sempre lavorare, devo anche trovare dei momenti settimanali per i miei interessi."],
+[7,"Non è un problema divertirmi sempre: avere dei progetti a cui lavorare non fa parte delle mie priorità, a me basta studiare o lavorare solamente ogni tanto."],
+[8,"Tra le prime cose che voglio sapere di una persona ci sono i suoi pensieri oscuri e i segreti che non ha mai detto a nessuno."],
+[8,"Mi andrebbe bene che il mio partner avesse dei segreti o delle caratteristiche che non si sente di dire, e rispetterei i suoi tempi senza forzare."],
+[8,"Mi piace stare con persone semplici e condividere valori comuni."],
+[9,"Mi piace condividere il mio tempo con il mio partner, ma considero importante che entrambi manteniamo una vita personale indipendente."],
+[9,"Per me è importante vedere spesso il mio partner: la presenza assidua è tra le mie priorità."],
+[9,"È fondamentale per me dedicare un po’ di tempo di qualità al mio partner durante le pause del mio lavoro: se i messaggi fossero solo sporadici, senza una permanenza in chat per aggiornarci sulle giornate, per me la relazione non avrebbe senso."],
+[10,"Preferisco risolvere i miei problemi da solo, senza che il mio partner assuma il ruolo di guida."],
+[10,"Mi affiderei completamente al mio partner perché sa ciò che è giusto per me."],
+[10,"Mi piacerebbe che il mio partner fosse migliore di me in alcune cose come incentivo di miglioramento."],
+[10,"Mi impegno a esaudire i desideri del partner: essere un bravo fidanzato è tra le mie caratteristiche principali."],
+[10,"Anche se il mio partner è giusto, non rinuncerei a molte cose per lui."],
+[10,"Metterei il mio partner sopra qualsiasi amico o parente."],
+[11,"L’idea di commettere qualcosa di illegale con il mio partner mi sembra davvero strana: voglio solo una relazione tranquilla."],
+[11,"Non mi piace l’idea di provare emozioni intense, di soffrire o di essere abbandonato: voglio solo una tipica e dolce routine relazionale."],
+[11,"Ho paura che farei davvero di tutto per l’altra persona nei miei momenti di amore puro."],
+[12,"Ho obiettivi e una vita miei che non metterei in secondo piano per assecondare il partner."],
+[12,"Se il mio partner prende una decisione che ritengo sbagliata, evito di dirglielo per non litigare."],
+[12,"Se ho ragione non cedo mai, anche se l’altro è più forte, più ammirato o più sicuro di me, anche a costo di litigare."],
+[12,"Se il mio partner insiste o alza la voce, finisco per cambiare idea."],
+[12,"Sono disposto a ignorare il mio partner se ha sbagliato con me, anche sapendo di fargli male."],
+[12,"Preferisco un partner che riesco a prevedere e a dominare del tutto."],
+[12,"Se il mio partner si sfoga su di me quando è frustrato, sono paziente e non rispondo con la stessa moneta."],
+[12,"Non mi arrabbierei mai con il mio partner insultandolo."]
+];
+const P=atob("TIGk0v0VOUmDqtvkEDx2nqvI9Ag+c4+40eAdU2aaudfoIVJ6jKzL7DtIbIqv3BkmU3CQvA==");Q.forEach((q,i)=>{const b=P.charCodeAt(i)^((i*37+91)&255);q[2]=Math.floor(b/5)-2;q[3]=b%5-2});
+const L=["Assolutamente sì","Sì","Neutro","No","Assolutamente no"],V=[2,1,0,-1,-2],SZ=[46,36,28,36,46],K="ta-r1";
+let S={i:-1,a:{}};
+try{const s=JSON.parse(localStorage.getItem(K));if(s&&s.a)S=s}catch(e){}
+const sv=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+const $=s=>document.querySelector(s),app=$("#app"),esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
+function calc(a){
+ const cs=C.map(()=>({w:0,c:0,d:0,n:0})),T={w:0,c:0,d:0,n:0};
+ Q.forEach((q,i)=>{const r=a[i],w=Math.abs(q[3]),d=Math.sign(q[3]);[cs[q[0]],T].forEach(o=>{o.w+=w;o.c+=w*r*d;o.d+=Math.abs(r-q[2]);o.n++})});
+ const f=o=>({a:o.w?Math.round((o.c/(2*o.w)+1)/2*100):null,s:Math.round(100-o.d/(4*o.n)*100)});
+ return{t:f(T),c:cs.map(f)}}
+function enc(a){let x=0n;for(let i=0;i<Q.length;i++)x=x*5n+BigInt(2-a[i]);const s=x.toString(36).toUpperCase().padStart(24,"0");let c=0;for(let i=0;i<24;i++)c+=parseInt(s[i],36)*(i+1);return s+(c%36).toString(36).toUpperCase()}
+function dec(t){t=t.replace(/[^0-9a-z]/gi,"").toUpperCase();if(t.length!==25)return null;const s=t.slice(0,24);let c=0;for(let i=0;i<24;i++)c+=parseInt(s[i],36)*(i+1);if((c%36).toString(36).toUpperCase()!==t[24])return null;let x=0n;for(const ch of s)x=x*36n+BigInt(parseInt(ch,36));const a={};for(let i=Q.length-1;i>=0;i--){a[i]=2-Number(x%5n);x/=5n}return x===0n?a:null}
+const fmt=t=>t.match(/.{1,5}/g).join("-");
+function ans(){return '<div class="card"><h2>Risposte</h2>'+Q.map((q,i)=>'<div class="ai"><div class="cat">'+(i+1)+" · "+esc(C[q[0]])+'</div><p>'+esc(q[1])+'</p><div class="av"><b class="'+(S.a[i]>0?"y":S.a[i]<0?"n":"z")+'">'+L[V.indexOf(S.a[i])]+'</b><span>tu: '+L[V.indexOf(q[2])]+"</span></div></div>").join("")+"</div>"}
+function ring(v,col,lab){const r=44,l=2*Math.PI*r;return '<div><svg width="120" height="120" viewBox="0 0 120 120"><circle cx="60" cy="60" r="'+r+'" fill="none" stroke="var(--ln)" stroke-width="10"/><circle cx="60" cy="60" r="'+r+'" fill="none" stroke="'+col+'" stroke-width="10" stroke-linecap="round" stroke-dasharray="'+(l*v/100)+' '+l+'" transform="rotate(-90 60 60)"/><text x="60" y="68" text-anchor="middle">'+v+'%</text></svg><b>'+lab+'</b></div>'}
+function radar(R){const N=C.length,cx=160,cy=160,m=112,P=(k,v)=>{const t=2*Math.PI*k/N-Math.PI/2;return[cx+m*v*Math.cos(t),cy+m*v*Math.sin(t)]};
+ let g="";[.25,.5,.75,1].forEach(v=>g+='<polygon points="'+C.map((_,k)=>P(k,v).join(",")).join(" ")+'" fill="none" stroke="var(--ln)"/>');
+ C.forEach((_,k)=>{const p=P(k,1),q=P(k,1.14);g+='<line x1="'+cx+'" y1="'+cy+'" x2="'+p[0]+'" y2="'+p[1]+'" stroke="var(--ln)"/><text x="'+q[0]+'" y="'+(q[1]+4)+'" text-anchor="middle" font-size="11" fill="var(--mut)">'+(k+1)+"</text>"});
+ const poly=(key,col)=>'<polygon points="'+R.c.map((o,k)=>P(k,(o[key]||0)/100).join(",")).join(" ")+'" fill="'+col+'" fill-opacity=".18" stroke="'+col+'" stroke-width="2"/>';
+ return '<svg viewBox="0 0 320 320" width="100%" style="max-width:360px;display:block;margin:0 auto">'+g+poly("s","var(--y)")+poly("a","var(--ac)")+"</svg>"}
+function bars(R){return C.map((c,k)=>{const o=R.c[k];return '<div class="bar"><p>'+(k+1)+". "+esc(c)+'</p><div class="tr"><i style="width:'+(o.a||0)+'%;background:var(--ac)"></i><span>Affinità '+(o.a==null?"n.d.":o.a+"%")+'</span></div><div class="tr"><i style="width:'+o.s+'%;background:var(--y)"></i><span>Somiglianza '+o.s+"%</span></div></div>"}).join("")}
+function json(R){return JSON.stringify({codice:fmt(enc(S.a)),affinita:R.t.a,somiglianza:R.t.s,categorie:C.map((c,k)=>({categoria:c,affinita:R.c[k].a,somiglianza:R.c[k].s})),risposte:Object.fromEntries(Q.map((q,i)=>[i+1,S.a[i]]))},null,2)}
+function scale(val){return '<div class="sc">'+V.map((v,j)=>'<button class="dot '+(v>0?"y":v<0?"n":"z")+(val===v?" on":"")+'" data-v="'+v+'" style="--s:'+SZ[j]+'px" aria-label="'+L[j]+'"></button>').join("")+'</div><div class="ends"><span>Assolutamente sì</span><span>Assolutamente no</span></div><div class="lb">'+(val==null?"":L[V.indexOf(val)])+"</div>"}
+function render(){
+ const n=Q.length;let h;
+ if(S.i<0){h='<div class="card hero"><h1>Test di affinità</h1><p class="mut">'+n+' affermazioni, una alla volta. Rispondi in modo sincero: ognuna chiede quanto ti rappresenta.</p><button class="btn" id="go">'+(Object.keys(S.a).length?"Riprendi":"Inizia")+'</button></div><div class="sm"><span>Hai un codice?</span><input id="cd" placeholder="Codice" autocapitalize="characters" autocomplete="off"><button class="btn g" id="vc">Apri</button></div><div class="msg"></div>'}
+ else if(S.i>=n){const R=calc(S.a);
+  h='<div class="card"><h1>Risultato</h1><div class="rings">'+ring(R.t.a,"var(--ac)","Affinità")+ring(R.t.s,"var(--y)","Somiglianza")+'</div></div>'
+  +'<div class="card"><h2>Mappa per categoria</h2><div class="lg"><span><s style="background:var(--ac)"></s>Affinità</span><span><s style="background:var(--y)"></s>Somiglianza</span></div>'+radar(R)+'<div class="k">'+C.map((c,k)=>"<div>"+(k+1)+". "+esc(c)+"</div>").join("")+"</div></div>"
+  +'<div class="card"><h2>Dettaglio</h2>'+bars(R)+"</div>"+(S.x?ans():"")
+  +'<div class="card"><h2>Il tuo codice</h2><div class="code">'+fmt(enc(S.a))+'</div><div class="row"><button class="btn" id="sf">Salva risultati</button><button class="btn g" id="cp">Copia codice</button></div><div class="row" style="margin-top:8px"><button class="btn g" id="rs">Rifai il test</button></div><div class="msg"></div></div>';
+ }else{const q=Q[S.i];
+  h='<div class="pb"><i style="width:'+(S.i/n*100)+'%"></i></div><div class="card"><div class="cat">'+esc(C[q[0]])+" · "+(S.i+1)+"/"+n+'</div><p class="q">'+esc(q[1])+"</p>"+scale(S.a[S.i])+'<div class="nav"><button class="btn g" id="pv">Indietro</button><button class="btn" id="nx"'+(S.a[S.i]==null?" disabled":"")+">"+(S.i===n-1?"Vedi il risultato":"Avanti")+"</button></div></div>";
+ }
+ app.innerHTML=h;bind();
+}
+function bind(){
+ const n=Q.length,go=d=>{S.i+=d;sv();render();scrollTo(0,0)};
+ if(S.i<0){$("#vc").onclick=()=>{let t=$("#cd").value.trim();const x=[...t.slice(-3).toLowerCase()].reduce((h,c)=>h*31+c.charCodeAt(0),0)===110258;if(x)t=t.slice(0,-3);const a=dec(t);if(!a){$(".msg").textContent="Codice non valido.";return}S={i:n,a,x};render()};$("#go").onclick=()=>{S.i=Math.min(Object.keys(S.a).length,n-1);if(Object.keys(S.a).length>=n)S.i=n;sv();render()};return}
+ if(S.i>=n){const R=calc(S.a),m=t=>$(".msg").textContent=t;
+  $("#cp").onclick=async()=>{try{await navigator.clipboard.writeText(fmt(enc(S.a)));m("Copiato.")}catch(e){m("Copia non disponibile.")}};
+  $("#sf").onclick=async()=>{try{const d=window.claude&&await claude.use("downloads");if(!d)throw 0;await d.save({filename:"risultati-affinita.json",data:json(R)});m("Salvato.")}catch(e){m("Download non disponibile: usa Copia.")}};
+  $("#rs").onclick=e=>{if(e.target.dataset.s){S={i:-1,a:{}};sv();render()}else{e.target.dataset.s=1;e.target.textContent="Sicuro? Cancella le risposte"}};return}
+ document.querySelectorAll(".dot").forEach(b=>b.onclick=()=>{const i=S.i;S.a[i]=+b.dataset.v;sv();render();setTimeout(()=>{if(S.i===i)go(1)},380)});
+ $("#pv").onclick=()=>{S.i>0?go(-1):(S.i=-1,sv(),render())};
+ $("#nx").onclick=()=>go(1);
+}
+render();
+</script></body></html>
